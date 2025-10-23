@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --color-lavender-50: #faf7fd;
+  --color-lavender-100: #f3ecfb;
+  --color-lavender-200: #eadcf8;
+  --color-lavender-300: #d9c0f2;
+  --color-lavender-400: #ba8be5;
+  --color-lavender-500: #a970dc;
+  --color-lavender-600: #9452cb;
+  --color-lavender-700: #7f3fb1;
+  --color-lavender-800: #6b3891;
+  --color-lavender-900: #582e75;
+  --color-lavender-950: #3a1754;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-lavender-50: var(--color-lavender-50);
+  --color-lavender-100: var(--color-lavender-100);
+  --color-lavender-200: var(--color-lavender-200);
+  --color-lavender-300: var(--color-lavender-300);
+  --color-lavender-400: var(--color-lavender-400);
+  --color-lavender-500: var(--color-lavender-500);
+  --color-lavender-600: var(--color-lavender-600);
+  --color-lavender-700: var(--color-lavender-700);
+  --color-lavender-800: var(--color-lavender-800);
+  --color-lavender-900: var(--color-lavender-900);
+  --color-lavender-950: var(--color-lavender-950);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #ffffff;
+    --foreground: #ededed;
+  }
+}
+
+@layer components {
+  .btn-outline {
+    @apply w-full max-w-xs mx-auto block rounded-2xl overflow-hidden shadow-lavender-900;
+  }
+  .btn-inline {
+    @apply text-background bg-linear-to-br from-lavender-500 from-35% to-lavender-900 px-4 py-2 rounded-[11px] flex items-center justify-center gap-2 font-normal;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Helvetica, sans-serif;
+}

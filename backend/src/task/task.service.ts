@@ -3,7 +3,6 @@ import { PrismaService } from '../prisma/prisma.service';
 import { Task } from '@prisma/client';
 import { CreateTaskDto } from './dto/create-task.dto';
 
-
 export interface TaskResponse {
   tasks: Task[];
   total: number;
@@ -30,10 +29,10 @@ export class TaskService {
     });
   }
 
-  async getTasks(page: number, completed: boolean): Promise<TaskResponse> {
+  async getTasks(page: number, completed: boolean): Promise<{ tasks: Task[]; totalPages: number }> {
     const pageSize = 5;
     const skip = (page - 1) * pageSize;
-
+  
     const [tasks, total] = await Promise.all([
       this.prisma.task.findMany({
         skip,
@@ -43,7 +42,9 @@ export class TaskService {
       }),
       this.prisma.task.count({ where: { completed } }),
     ]);
-
-    return { tasks, total };
+  
+    const totalPages = Math.ceil(total / pageSize); // Calculate total pages
+  
+    return { tasks, totalPages };
   }
 }
