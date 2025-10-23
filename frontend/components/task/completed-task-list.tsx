@@ -6,17 +6,18 @@ import TaskItem from "./task-item";
 import { Task } from "@/types/task";
 import useTaskStore from "@/store/taskStore";
 import { useEffect } from "react";
+import LoadingSpinner from "../loading/loading-spinner";
+import AnimatedWrapper from "../animation/animated-wrapper";
 
 const CompletedTaskList = () => {
   const { tasksCompleted, pageCompleted } = useTaskStore();
   const { isLoading, isError, refetch } = useQuery({
-    enabled: tasksCompleted.length == 0,
     queryKey: ["tasksCompleted", pageCompleted],
     queryFn: () => fetchTasksCompletedService(pageCompleted),
   });
 
-  if (isLoading) {
-    return <div>Loading completed tasks...</div>;
+    if (isLoading) {
+      return <LoadingSpinner />;
   }
 
   if (isError) {
@@ -24,16 +25,17 @@ const CompletedTaskList = () => {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 items-start">
       {tasksCompleted.length > 0 ? (
         tasksCompleted.map((task: Task) => (
-          <TaskItem
+          <AnimatedWrapper keyProp={task.id.toString()}><TaskItem
             key={task.id}
             title={task.title}
             description={task.description}
             id={task.id}
             completed={task.completed}
           />
+          </AnimatedWrapper>
         ))
       ) : (
         <div>No completed tasks to display</div>

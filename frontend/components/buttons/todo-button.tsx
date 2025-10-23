@@ -3,12 +3,13 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus } from "lucide-react";
-import TitleInput from "./input/title-input";
-import DescriptionInput from "./input/description-input";
+import TitleInput from "../input/title-input";
+import DescriptionInput from "../input/description-input";
 import type { TaskBase } from "../../types/task";
 import useTaskStore from "@/store/taskStore";
 import { useMutation } from "@tanstack/react-query";
 import { createTaskService } from "@/api/service";
+import AnimatedWrapper from "../animation/animated-wrapper";
 
 type Step = "initial" | "title" | "description";
 
@@ -49,52 +50,46 @@ const TodoButton = () => {
   };
 
   return (
-    <div className="space-y-8 min-h-28 overflow-hidden">
+    <motion.div
+    className="space-y-8 overflow-hidden"
+    animate={{
+      height: step === "initial" ? "3rem" : step === "title" ? "3rem" : "6rem", 
+    }}
+    transition={{ type: "spring", stiffness: 100, damping: 20 }} 
+  >
       <AnimatePresence mode="wait">
         {step === "initial" && (
-          <motion.div
-            key="initial"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
+          <AnimatedWrapper keyProp="initial">
             <button onClick={handleAddClick} className="btn-outline">
               <div className="btn-inline h-9">
-                <Plus size={24} />
+                <motion.div
+                  whileHover={{ rotate: 360, scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <Plus size={24} />
+                </motion.div>
               </div>
             </button>
-          </motion.div>
+          </AnimatedWrapper>
         )}
 
         {step === "title" && (
-          <motion.div
-            key="title"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
+          <AnimatedWrapper keyProp="title">
             <TitleInput onSubmit={handleTitleSubmit} />
-          </motion.div>
+          </AnimatedWrapper>
         )}
 
         {step === "description" && (
-          <motion.div
-            key="description"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
+          <AnimatedWrapper keyProp="description">
             <DescriptionInput
               title={title}
               onSubmit={handleDescriptionSubmit}
             />
-          </motion.div>
+          </AnimatedWrapper>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };
 

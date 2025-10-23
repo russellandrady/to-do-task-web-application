@@ -17,7 +17,7 @@ const TaskItemList = () => {
     numberOfPagesNotCompleted,
   } = useTaskStore();
   return (
-    <div>
+    <div className="items-start">
       {/* Toggle Button */}
       <div className="flex justify-between items-center mb-4">
         {/* Left Section: Text and Toggle Button */}

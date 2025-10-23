@@ -6,17 +6,21 @@ import TaskItem from "./task-item";
 import { Task } from "@/types/task";
 import useTaskStore from "@/store/taskStore";
 import { useEffect } from "react";
+import LoadingSpinner from "../loading/loading-spinner";
+import LoadingThreeDotsPulse from "./completed-task-list";
+import AnimatedWrapper from "../animation/animated-wrapper";
 
 const NotCompletedTaskList = () => {
   const { tasksNotCompleted, pageNotCompleted } = useTaskStore();
   const {  isLoading, isError, refetch } = useQuery({
-    enabled: tasksNotCompleted.length === 0,
     queryKey: ["tasksNotCompleted", pageNotCompleted],
     queryFn: () => fetchTasksNotCompletedService(pageNotCompleted),
   });
 
   if (isLoading) {
-    return <div>Loading not completed tasks...</div>;
+    return (
+      <LoadingSpinner/>
+    );
   }
 
   if (isError) {
@@ -24,9 +28,10 @@ const NotCompletedTaskList = () => {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 items-start">
       {tasksNotCompleted.length > 0 ? (
         tasksNotCompleted.map((task: Task) => (
+          <AnimatedWrapper keyProp={task.id.toString()}>
           <TaskItem
             key={task.id}
             title={task.title}
@@ -34,6 +39,7 @@ const NotCompletedTaskList = () => {
             id={task.id}
             completed={task.completed}
           />
+          </AnimatedWrapper>
         ))
       ) : (
         <div>No not completed tasks to display</div>
