@@ -5,7 +5,7 @@ import { CreateTaskDto } from './dto/create-task.dto';
 
 export interface TaskResponse {
   tasks: Task[];
-  total: number;
+  totalPages: number;
 }
 @Injectable()
 export class TaskService {
@@ -29,7 +29,7 @@ export class TaskService {
     });
   }
 
-  async getTasks(page: number, completed: boolean): Promise<{ tasks: Task[]; totalPages: number }> {
+  async getTasks(page: number, completed: boolean): Promise<TaskResponse> {
     const pageSize = 5;
     const skip = (page - 1) * pageSize;
   

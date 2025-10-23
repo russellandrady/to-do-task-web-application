@@ -1,5 +1,9 @@
-export interface Task {
+export interface TaskBase {
   title: string
   description: string
-  completed?: boolean
+}
+
+export interface Task extends TaskBase{
+  id: number
+  completed: boolean
 }

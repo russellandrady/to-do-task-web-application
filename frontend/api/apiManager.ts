@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
 export const apiGET = async (url: string, params?: object) => {
   try {
     const response = await axiosInstance.get(url, { params });
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error(`GET ${url} failed:`, error);
     throw error;
@@ -20,7 +20,7 @@ export const apiGET = async (url: string, params?: object) => {
 export const apiPOST = async (url: string, data: object) => {
   try {
     const response = await axiosInstance.post(url, data);
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error(`POST ${url} failed:`, error);
     throw error;
@@ -30,7 +30,7 @@ export const apiPOST = async (url: string, data: object) => {
 export const apiPATCH = async (url: string, data: object) => {
   try {
     const response = await axiosInstance.patch(url, data);
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error(`PATCH ${url} failed:`, error);
     throw error;
@@ -40,7 +40,7 @@ export const apiPATCH = async (url: string, data: object) => {
 export const apiDELETE = async (url: string) => {
   try {
     const response = await axiosInstance.delete(url);
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error(`DELETE ${url} failed:`, error);
     throw error;
