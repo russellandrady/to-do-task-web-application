@@ -5,16 +5,15 @@ import { fetchTasksNotCompletedService } from "@/api/service";
 import TaskItem from "./task-item";
 import { Task } from "@/types/task";
 import useTaskStore from "@/store/taskStore";
+import { useEffect } from "react";
 
 const NotCompletedTaskList = () => {
-  const { tasksNotCompleted } = useTaskStore();
-  const {  isLoading, isError } = useQuery({
-    enabled: tasksNotCompleted.length == 0,
-    queryKey: ["tasksNotCompleted"],
-    queryFn: fetchTasksNotCompletedService,
+  const { tasksNotCompleted, pageNotCompleted } = useTaskStore();
+  const {  isLoading, isError, refetch } = useQuery({
+    enabled: tasksNotCompleted.length === 0,
+    queryKey: ["tasksNotCompleted", pageNotCompleted],
+    queryFn: () => fetchTasksNotCompletedService(pageNotCompleted),
   });
-
-  console.log("tasks not completed", tasksNotCompleted)
 
   if (isLoading) {
     return <div>Loading not completed tasks...</div>;

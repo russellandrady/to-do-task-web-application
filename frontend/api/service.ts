@@ -4,29 +4,39 @@ import useTaskStore from "@/store/taskStore";
 
 export const createTaskService = async (newTask: TaskBase) => {
   const data = await apiPOST("/tasks", newTask);
-  const { setTasksNotCompleted } = useTaskStore.getState();
-  setTasksNotCompleted([]);
-  return data;
-};
-
-export const fetchTasksCompletedService = async () => {
-  const data = await apiGET("/tasks/completed");
-  const { setTasksCompleted } = useTaskStore.getState();
-  setTasksCompleted(data.tasks);
+  const { setTasksNotCompleted, setPageNotCompleted, setNumberOfPagesNotCompleted } = useTaskStore.getState();
+  setTasksNotCompleted(data.tasks);
+  setPageNotCompleted(data.page);
+  setNumberOfPagesNotCompleted(data.totalPages);
   return data.tasks;
 };
 
-export const fetchTasksNotCompletedService = async () => {
-  const data = await apiGET("/tasks/not-completed");
-  const { setTasksNotCompleted } = useTaskStore.getState();
+export const fetchTasksCompletedService = async (page: number) => {
+  const data = await apiGET(`/tasks/completed?page=${page}`);
+  const { setTasksCompleted, setPageCompleted, setNumberOfPagesCompleted } = useTaskStore.getState();
+  setTasksCompleted(data.tasks);
+  setPageCompleted(data.page);
+  setNumberOfPagesCompleted(data.totalPages);
+  return data.tasks;
+};
+
+export const fetchTasksNotCompletedService = async (page: number) => {
+  const data = await apiGET(`/tasks/not-completed?page=${page}`);
+  const { setTasksNotCompleted, setPageNotCompleted, setNumberOfPagesNotCompleted } = useTaskStore.getState();
   setTasksNotCompleted(data.tasks);
+  setPageNotCompleted(data.page);
+  setNumberOfPagesNotCompleted(data.totalPages);
   return data.tasks;
 };
 
 export const markTaskAsCompletedService = async (taskId: number) => {
   const data = await apiPATCH(`/tasks/${taskId}`, {});
-  const { setTasksCompleted, setTasksNotCompleted } = useTaskStore.getState();
-  setTasksNotCompleted([]);
+  const { setTasksCompleted, setTasksNotCompleted, setPageNotCompleted, setNumberOfPagesNotCompleted, setPageCompleted, setNumberOfPagesCompleted } = useTaskStore.getState();
+  setTasksNotCompleted(data.tasks);
+  setPageNotCompleted(data.page);
+  setNumberOfPagesNotCompleted(data.totalPages);
   setTasksCompleted([]);
-  return data;
+  setPageCompleted(1);
+  setNumberOfPagesCompleted(1);
+  return data.tasks;
 };

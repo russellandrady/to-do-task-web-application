@@ -5,12 +5,14 @@ import { fetchTasksCompletedService } from "@/api/service";
 import TaskItem from "./task-item";
 import { Task } from "@/types/task";
 import useTaskStore from "@/store/taskStore";
+import { useEffect } from "react";
 
 const CompletedTaskList = () => {
-  const { tasksCompleted } = useTaskStore();
-  const { isLoading, isError } = useQuery({
-    queryKey: ["tasksCompleted"],
-    queryFn: fetchTasksCompletedService,
+  const { tasksCompleted, pageCompleted } = useTaskStore();
+  const { isLoading, isError, refetch } = useQuery({
+    enabled: tasksCompleted.length == 0,
+    queryKey: ["tasksCompleted", pageCompleted],
+    queryFn: () => fetchTasksCompletedService(pageCompleted),
   });
 
   if (isLoading) {

@@ -6,27 +6,31 @@ import { CreateTaskDto } from './dto/create-task.dto';
 export interface TaskResponse {
   tasks: Task[];
   totalPages: number;
+  page: number;
 }
 @Injectable()
 export class TaskService {
   
   constructor(private prisma: PrismaService) {}
 
-  async createTask(dto: CreateTaskDto): Promise<Task> {
-    return this.prisma.task.create({ data: dto });
+  async createTask(dto: CreateTaskDto): Promise<TaskResponse> {
+    await this.prisma.task.create({ data: dto });
+    return this.getTasks(1, false);
   }
 
-  async markTaskAsCompleted(id: number): Promise<Task> {
-    return this.prisma.task.update({
+  async markTaskAsCompleted(id: number): Promise<TaskResponse> {
+    await this.prisma.task.update({
       where: { id },
       data: { completed: true },
     });
+    return this.getTasks(1, false);
   }
 
-  async deleteTask(id: number): Promise<Task> {
-    return this.prisma.task.delete({
+  async deleteTask(id: number): Promise<TaskResponse> {
+    await this.prisma.task.delete({
       where: { id },
     });
+    return this.getTasks(1, false);
   }
 
   async getTasks(page: number, completed: boolean): Promise<TaskResponse> {
@@ -45,6 +49,6 @@ export class TaskService {
   
     const totalPages = Math.ceil(total / pageSize); // Calculate total pages
   
-    return { tasks, totalPages };
+    return { tasks, totalPages, page };
   }
 }

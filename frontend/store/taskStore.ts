@@ -5,12 +5,16 @@ import type { Task } from "../types/task";
 interface TaskState {
   tasksCompleted: Task[];
   tasksNotCompleted: Task[];
-  page: number;
-  numberOfPages: number;
+  pageCompleted: number;
+  pageNotCompleted: number;
+  numberOfPagesCompleted: number;
+  numberOfPagesNotCompleted: number;
   setTasksCompleted: (tasks: Task[]) => void;
   setTasksNotCompleted: (tasks: Task[]) => void;
-  setPage: (page: number) => void;
-  setNumberOfPages: (numberOfPages: number) => void;
+  setPageCompleted: (page: number) => void;
+  setNumberOfPagesCompleted: (numberOfPages: number) => void;
+  setPageNotCompleted: (page: number) => void;
+  setNumberOfPagesNotCompleted: (numberOfPages: number) => void;
 }
 
 const useTaskStore = create<TaskState>()(
@@ -18,13 +22,17 @@ const useTaskStore = create<TaskState>()(
     (set) => ({
       tasksCompleted: [],
       tasksNotCompleted: [],
-      page: 1,
-      numberOfPages: 1,
+      pageCompleted: 1,
+      pageNotCompleted: 1,
+      numberOfPagesCompleted: 1,
+      numberOfPagesNotCompleted: 1,
       setTasksCompleted: (tasks) => set(() => ({ tasksCompleted: tasks })),
       setTasksNotCompleted: (tasks) => set(() => ({ tasksNotCompleted: tasks })),
 
-      setPage: (page) => set(() => ({ page })),
-      setNumberOfPages: (numberOfPages) => set(() => ({ numberOfPages })),
+      setPageCompleted: (page) => set(() => ({ pageCompleted: page })),
+      setNumberOfPagesCompleted: (numberOfPages) => set(() => ({ numberOfPagesCompleted: numberOfPages })),
+      setPageNotCompleted: (page) => set(() => ({ pageNotCompleted: page })),
+      setNumberOfPagesNotCompleted: (numberOfPages) => set(() => ({ numberOfPagesNotCompleted: numberOfPages })),
     }),
     {
       name: "task-store",

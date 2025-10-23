@@ -49,7 +49,7 @@ const TodoButton = () => {
   };
 
   return (
-    <div className="space-y-8 overflow-hidden">
+    <div className="space-y-8 min-h-28 overflow-hidden">
       <AnimatePresence mode="wait">
         {step === "initial" && (
           <motion.div
