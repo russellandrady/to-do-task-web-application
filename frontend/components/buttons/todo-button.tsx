@@ -6,6 +6,10 @@ import { Plus } from "lucide-react";
 import TitleInput from "./input/title-input";
 import DescriptionInput from "./input/description-input";
 import type { Task } from "../../types/task";
+import useTaskStore from "@/store/taskStore";
+import { useMutation } from "@tanstack/react-query";
+import { apiPOST } from "@/api/apiManager";
+import { createTaskService } from "@/api/service";
 
 type Step = "initial" | "title" | "description";
 
@@ -13,7 +17,20 @@ const TodoButton = () => {
   const [step, setStep] = useState<Step>("initial");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const { tasks, addTask } = useTaskStore();
+
+  //mutations
+
+  const createTaskMutation = useMutation({
+    mutationFn: createTaskService,
+    onSuccess: (createdTask) => {
+      addTask(createdTask);
+
+      setTitle("");
+      setDescription("");
+      setStep("initial");
+    },
+  });
 
   const handleAddClick = () => {
     setStep("title");
@@ -30,10 +47,7 @@ const TodoButton = () => {
       title,
       description: descriptionValue,
     };
-    setTasks([...tasks, newTask]);
-    setTitle("");
-    setDescription("");
-    setStep("initial");
+    createTaskMutation.mutate(newTask);
   };
 
   return (
