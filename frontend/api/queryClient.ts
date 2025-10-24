@@ -1,6 +1,7 @@
 "use client";
 
 import { QueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 interface ApiError {
   message: string;
@@ -30,7 +31,7 @@ const queryClient = new QueryClient({
           apiError?.message ||
           "An unexpected error occurred";
 
-        console.error("API Error:", errorMessage);
+        toast.error(errorMessage);
       },
     },
   },

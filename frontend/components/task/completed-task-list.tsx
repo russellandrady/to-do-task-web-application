@@ -10,7 +10,7 @@ import LoadingSpinner from "../loading/loading-spinner";
 import AnimatedWrapper from "../animation/animated-wrapper";
 
 const CompletedTaskList = () => {
-  const { tasksCompleted, pageCompleted } = useTaskStore();
+  const { tasksCompleted, pageCompleted } = useTaskStore.getState();
   const { isLoading } = useQuery({
     queryKey: ["tasksCompleted", pageCompleted],
     queryFn: () => fetchTasksCompletedService(pageCompleted),

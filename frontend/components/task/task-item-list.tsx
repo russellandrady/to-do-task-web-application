@@ -8,7 +8,6 @@ import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 
 const TaskItemList = () => {
   const [showCompleted, setShowCompleted] = useState(false);
-  console.log("Task item list rendered");
   const {
     pageCompleted,
     setPageCompleted,

@@ -15,6 +15,9 @@ interface TaskState {
   setNumberOfPagesCompleted: (numberOfPages: number) => void;
   setPageNotCompleted: (page: number) => void;
   setNumberOfPagesNotCompleted: (numberOfPages: number) => void;
+
+  setCompletedTasksData: (tasks: Task[], page: number, totalPages: number) => void;
+  setNotCompletedTasksData: (tasks: Task[], page: number, totalPages: number) => void;
 }
 
 const useTaskStore = create<TaskState>()(
@@ -33,6 +36,21 @@ const useTaskStore = create<TaskState>()(
       setNumberOfPagesCompleted: (numberOfPages) => set(() => ({ numberOfPagesCompleted: numberOfPages })),
       setPageNotCompleted: (page) => set(() => ({ pageNotCompleted: page })),
       setNumberOfPagesNotCompleted: (numberOfPages) => set(() => ({ numberOfPagesNotCompleted: numberOfPages })),
+
+      setCompletedTasksData: (tasks, page, totalPages) =>
+        set(() => ({
+          tasksCompleted: tasks,
+          pageCompleted: page,
+          numberOfPagesCompleted: totalPages,
+        })),
+
+      // Batch setter for not completed tasks
+      setNotCompletedTasksData: (tasks, page, totalPages) =>
+        set(() => ({
+          tasksNotCompleted: tasks,
+          pageNotCompleted: page,
+          numberOfPagesNotCompleted: totalPages,
+        })),
     }),
     {
       name: "task-store",
