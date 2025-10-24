@@ -10,6 +10,6 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   });
   app.setGlobalPrefix('api');
-  await app.listen(config.get<number>('PORT'));
+  await app.listen(config.get<number>('BACKEND_PORT'), '0.0.0.0');
 }
 bootstrap();

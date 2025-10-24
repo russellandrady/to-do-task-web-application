@@ -38,7 +38,7 @@ const NotCompletedTaskList = () => {
           </AnimatedWrapper>
         ))
       ) : (
-        <div className="w-full flex items-center justify-center py-4">No not completed tasks to display</div>
+        <div className="w-full flex items-center justify-center py-4">No tasks to complete</div>
       )}
     </div>
   );
