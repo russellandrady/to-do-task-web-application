@@ -43,8 +43,8 @@ const TodoButton = () => {
   const handleDescriptionSubmit = (descriptionValue: string) => {
     setDescription(descriptionValue);
     const newTask: TaskBase = {
-      title,
-      description: descriptionValue,
+      title: title.trim(),
+      description: descriptionValue.trim(),
     };
     createTaskMutation.mutate(newTask);
   };

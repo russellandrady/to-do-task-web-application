@@ -11,34 +11,33 @@ import AnimatedWrapper from "../animation/animated-wrapper";
 
 const CompletedTaskList = () => {
   const { tasksCompleted, pageCompleted } = useTaskStore();
-  const { isLoading, isError, refetch } = useQuery({
+  const { isLoading } = useQuery({
     queryKey: ["tasksCompleted", pageCompleted],
     queryFn: () => fetchTasksCompletedService(pageCompleted),
   });
 
-    if (isLoading) {
-      return <LoadingSpinner />;
-  }
-
-  if (isError) {
-    return <div>Failed to load completed tasks.</div>;
+  if (isLoading) {
+    return <LoadingSpinner />;
   }
 
   return (
     <div className="space-y-4 items-start">
       {tasksCompleted.length > 0 ? (
         tasksCompleted.map((task: Task) => (
-          <AnimatedWrapper keyProp={task.id.toString()}><TaskItem
-            key={task.id}
-            title={task.title}
-            description={task.description}
-            id={task.id}
-            completed={task.completed}
-          />
+          <AnimatedWrapper key={task.id.toString()} keyProp={task.id.toString()}>
+            <TaskItem
+              key={task.id}
+              title={task.title}
+              description={task.description}
+              id={task.id}
+              completed={task.completed}
+            />
           </AnimatedWrapper>
         ))
       ) : (
-        <div>No completed tasks to display</div>
+        <div className="w-full flex items-center justify-center py-4">
+          No tasks to complete
+        </div>
       )}
     </div>
   );

@@ -12,7 +12,7 @@ import AnimatedWrapper from "../animation/animated-wrapper";
 
 const NotCompletedTaskList = () => {
   const { tasksNotCompleted, pageNotCompleted } = useTaskStore();
-  const {  isLoading, isError, refetch } = useQuery({
+  const {  isLoading } = useQuery({
     queryKey: ["tasksNotCompleted", pageNotCompleted],
     queryFn: () => fetchTasksNotCompletedService(pageNotCompleted),
   });
@@ -23,15 +23,11 @@ const NotCompletedTaskList = () => {
     );
   }
 
-  if (isError) {
-    return <div>Failed to load not completed tasks.</div>;
-  }
-
   return (
     <div className="space-y-4 items-start">
       {tasksNotCompleted.length > 0 ? (
         tasksNotCompleted.map((task: Task) => (
-          <AnimatedWrapper keyProp={task.id.toString()}>
+          <AnimatedWrapper key={task.id.toString()} keyProp={task.id.toString()}>
           <TaskItem
             key={task.id}
             title={task.title}
@@ -42,7 +38,7 @@ const NotCompletedTaskList = () => {
           </AnimatedWrapper>
         ))
       ) : (
-        <div>No not completed tasks to display</div>
+        <div className="w-full flex items-center justify-center py-4">No not completed tasks to display</div>
       )}
     </div>
   );
