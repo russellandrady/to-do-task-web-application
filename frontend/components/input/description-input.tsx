@@ -26,12 +26,14 @@ const DescriptionInput = ({ title, onSubmit }: DescriptionInputProps) => {
         placeholder="Task Title"
         onSubmit={() => {}}
         disabled={true}
+        testId="task-title-input" 
       />
       <TextInputField
         value={value}
         onChange={setValue}
         placeholder="Enter task description..."
         onSubmit={handleSubmit}
+        testId="task-description-input"
       />
     </div>
   );

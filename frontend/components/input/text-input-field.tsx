@@ -9,6 +9,7 @@ interface TextInputFieldProps {
   placeholder: string;
   onSubmit: () => void;
   disabled?: boolean;
+  testId?: string;
 }
 
 const TextInputField = ({
@@ -17,6 +18,7 @@ const TextInputField = ({
   placeholder,
   onSubmit,
   disabled,
+  testId,
 }: TextInputFieldProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,6 +40,7 @@ const TextInputField = ({
           }`}
           autoFocus
           disabled={disabled}
+          data-testid={testId}
         />
         <button
           type="submit"

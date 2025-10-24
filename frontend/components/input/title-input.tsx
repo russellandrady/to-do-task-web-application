@@ -22,6 +22,7 @@ const TitleInput = ({ onSubmit }: TitleInputProps) => {
       onChange={setValue}
       placeholder="Enter task title..."
       onSubmit={handleSubmit}
+      testId="task-title-input"
     />
   );
 };

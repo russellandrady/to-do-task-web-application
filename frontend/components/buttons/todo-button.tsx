@@ -60,7 +60,7 @@ const TodoButton = () => {
       <AnimatePresence mode="wait">
         {step === "initial" && (
           <AnimatedWrapper keyProp="initial">
-            <button onClick={handleAddClick} className="btn-outline">
+            <button data-testid="create-task-btn" onClick={handleAddClick} className="btn-outline">
               <div className="btn-inline h-9">
                 <motion.div
                   whileHover={{ rotate: 360, scale: 1.2 }}

@@ -11,7 +11,7 @@ const TaskItem = ({ id, title, description, completed }: Task) => {
     mutationFn: () => markTaskAsCompletedService(id),
   });
   return (
-    <div className="task-item min-h-27 relative p-4 items-start justify-start">
+    <div className="task-item min-h-27 relative p-4 items-start justify-start" data-testid={`task-item-${id}`}>
       {/* Title and Description */}
       <div className="text-left">
         <div className="font-semibold">{title}</div>
@@ -20,6 +20,7 @@ const TaskItem = ({ id, title, description, completed }: Task) => {
 
       {/* Done Button */}
       {!completed && <motion.button
+        data-testid={`done-btn-${id}`}
         onClick={() => mutation.mutate()}
         className="absolute bottom-4 right-4 flex items-center gap-2 bg-lavender-500 px-4 py-2 rounded-xl opacity-50 hover:opacity-100 transition"
         whileHover="hover"
