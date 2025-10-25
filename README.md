@@ -1,6 +1,9 @@
 # Todo App — Fullstack (Next.js + NestJS + MySQL)
 
-Short description  
+---
+
+## Short description
+
 A simple Todo application with a Next.js frontend, a NestJS backend, and a MySQL database. Features include creating tasks, marking tasks completed, pagination, and simple state persistence. The project includes unit tests for frontend and backend and end-to-end (E2E) tests for the frontend (Playwright) that exercise the full stack.
 
 Tech stack & key functionality
@@ -32,12 +35,9 @@ Note about E2E: Playwright E2E tests run against the real frontend and backend a
 
 Copy the example env and edit if you need different ports:
 
-Windows / Linux:
+Windows / Linux (from project root)
 ```bash
-# from project root
 cp .env.example .env
-# (on Windows PowerShell)
-Copy-Item .env.example .env
 ```
 
 Edit `.env` to change ports or connection strings (MYSQL_PORT, BACKEND_PORT, FRONTEND_PORT, NEXT_PUBLIC_API_BASE_URL, DATABASE_URL).
@@ -53,23 +53,14 @@ Default access (from .env.example)
 
 Use docker-compose to build and run the full stack (frontend, backend, db).
 
-Linux / macOS:
+Windows / Linux (from project root)
 ```bash
-docker compose up --build -d
-```
-
-Windows (PowerShell / CMD):
-```powershell
-docker-compose up --build -d
-# or if using Docker Compose v2 CLI:
 docker compose up --build -d
 ```
 
 Stop containers:
 ```bash
 docker compose down
-# or
-docker-compose down
 ```
 
 Access URLs after docker-compose up (defaults):
@@ -94,22 +85,28 @@ Important: Playwright browser binaries are large. They are NOT installed automat
 
 Frontend (unit + e2e)
 ```bash
-# Frontend unit tests (Jest)
 cd frontend
 npm ci
 npm test
+```
 
-# Frontend E2E (Playwright)
-# 1) install playwright package (devDependency) is included in package.json; install deps first:
+Frontend E2E (Playwright)
+```bash
 cd frontend
 npm ci
+```
 
-# Optional one-time step to download browsers (heavy)
+Optional one-time step to download browsers (heavy)
+```bash
 npx playwright install
+```
 
-# Run Playwright tests
+Run Playwright tests
+```bash
 npm run test:e2e
-# or to run with browser UI / headed:
+```
+or to run with browser UI / headed
+```bash
 npm run test:e2e:headed
 ```
 
@@ -117,14 +114,9 @@ Backend (unit + e2e)
 ```bash
 cd backend
 npm ci
-npm test            # run unit tests
-# e2e (if scripts present)
+npm test
 npm run test:e2e
 ```
-
-CI recommendation
-- In CI, add a step to run `npx playwright install` (or use Playwright Docker image) before `npm run test:e2e`.
-- Prefer using a separate test database or a cleanup endpoint to avoid test data pollution.
 
 ---
 
@@ -132,32 +124,29 @@ CI recommendation
 
 Docker
 ```bash
-# Build + start (Linux/mac)
-docker compose up --build -d
-
-# Build + start (Windows)
 docker-compose up --build -d
 ```
 
 Stop
 ```bash
 docker compose down
-# or
-docker-compose down
 ```
 
 Tests
 ```bash
-# Frontend unit
 cd frontend && npm test
+```
 
-# Frontend E2E (one-time browser install required)
+Frontend E2E (one-time browser install required)
+```bash
 cd frontend
 npm ci
-npx playwright install    # optional, one-time
+npx playwright install
 npm run test:e2e
+```
 
-# Backend tests
+Backend tests
+```bash
 cd backend && npm test
 ```
 
