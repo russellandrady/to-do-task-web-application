@@ -16,21 +16,23 @@ Tech stack & key functionality
   - Features: REST API for tasks (create, read, update, pagination)
   - Testing:
     - Unit & integration tests: Jest (includes e2e tests under `test/`)
-- Database: MySQL (containerized via docker-compose)
+- Database: MySQL (containerized via docker compose)
 
-Note about E2E: Playwright E2E tests run against the real frontend and backend and will hit the real database. Ensure you run tests against a test database or clean DB between runs.
+Note about E2E: Playwright E2E tests run against the real frontend and backend and will hit the real database. 
 
 ---
 
 ## Prerequisites
 
+Required:
+- Docker & Docker Compose
+
+Optional (only for running frontend tests locally):
 - Node.js 22+
 - npm (or yarn/pnpm)
-- Docker & Docker Compose
-- (Optional for local E2E) Playwright browsers - large download. See instructions below.
+- Playwright browsers (for E2E tests - large download)
 
 ---
-
 ## Environment
 
 Copy the example env and edit if you need different ports
@@ -51,11 +53,11 @@ Default access (from .env.example)
 
 ## Run with Docker (build + start)
 
-Use docker-compose to build and run the full stack (frontend, backend, db).
+Use docker compose to build and run the full stack (frontend, backend, db).
 
 Windows / Linux (from project root)
 ```bash
-docker compose up --build -d
+docker compose up --build
 ```
 
 Stop containers
@@ -63,7 +65,7 @@ Stop containers
 docker compose down
 ```
 
-Access URLs after docker-compose up (defaults)
+Access URLs after docker compose up (defaults)
 - Frontend: http://localhost:3001
 - Backend API: http://localhost:3000/api
 - MySQL: connect to localhost:3308 (user: root, password: root, database: todo_db)
@@ -77,40 +79,35 @@ mysql -h 127.0.0.1 -P 3308 -u root -p
 
 ## Tests
 
-Important: Playwright browser binaries are large. They are NOT installed automatically by this repo unless you run the explicit Playwright install step. 
+Backend (unit tests and integration tests with Docker)
+```bash
+docker compose run --rm backend npm test
+```
 
-Frontend (unit + e2e)
+Frontend (unit tests)
 ```bash
 cd frontend
-npm ci
-npm test
+npm install
+```
+
+```bash
+npm run dev
+```
+
+```bash
+npx jest components/task/__tests__/task.test.tsx
+npx jest api/__tests__/service.test.ts
+npx jest store/__tests__/taskStore.test.ts
 ```
 
 Frontend E2E (Playwright)
 ```bash
 cd frontend
-npm ci
-```
-
-Optional one-time step to download browsers (heavy)
-```bash
+npm install
 npx playwright install
 ```
 
-Run Playwright tests
 ```bash
-npm run test:e2e
-```
-or to run with browser UI / headed
-```bash
-npm run test:e2e:headed
-```
-
-Backend (unit + e2e)
-```bash
-cd backend
-npm ci
-npm test
 npm run test:e2e
 ```
 

@@ -36,12 +36,17 @@ RUN apk add --no-cache wget
 COPY package*.json ./
 
 # Install only production dependencies
-RUN npm ci --only=production
+RUN npm ci --include=dev
 
 # Copy built application
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/prisma ./prisma
+
+# Copy test files and configurations
+COPY --from=builder /app/src ./src
+COPY --from=builder /app/test ./test
+COPY --from=builder /app/tsconfig.json ./tsconfig.json
 
 EXPOSE 3000
 
