@@ -4,7 +4,7 @@
 
 ## Short description
 
-A simple Todo application with a Next.js frontend, a NestJS backend, and a MySQL database. Features include creating tasks, marking tasks completed, pagination, and simple state persistence. The project includes unit tests for frontend and backend and end-to-end (E2E) tests for the frontend (Playwright) that exercise the full stack.
+A simple Todo application with a Next.js frontend, a NestJS backend, and a MySQL database. Features include creating tasks, marking tasks completed, pagination, and simple state persistence. The project includes comprehensive testing with frontend unit and E2E tests, and backend unit and integration tests.
 
 Tech stack & key functionality
 - Frontend: Next.js (React + TS), React Query, Zustand (store), Framer Motion (animations)
