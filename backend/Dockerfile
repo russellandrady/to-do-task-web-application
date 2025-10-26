@@ -48,6 +48,7 @@ COPY --from=builder /app/src ./src
 COPY --from=builder /app/test ./test
 COPY --from=builder /app/tsconfig.json ./tsconfig.json
 
-EXPOSE 3000
+ARG BACKEND_PORT=3000
+EXPOSE ${BACKEND_PORT}
 
 CMD ["sh", "-c", "npx prisma migrate deploy && node dist/src/main.js"]
